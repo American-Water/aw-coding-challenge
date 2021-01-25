@@ -10,6 +10,7 @@ namespace CodingChallenge.UI.Models
         public const string SortColumnKey = "sort";
         public const string SortDirectionKey = "dir";
         public const string PageKey = "page";
+        public const string SearchTextValue = "search";
         public const string SortAscendingValue = "ASC";
         public const string SortDescendingValue = "DESC";
 
@@ -18,6 +19,7 @@ namespace CodingChallenge.UI.Models
             ItemsPerPage = 10;
         }
 
+        public string SearchText { get; set; }
         public string SortColumn { get; set; }
         public SortDirection SortDirection { get; set; }
         public int Page { get; set; }
@@ -26,7 +28,7 @@ namespace CodingChallenge.UI.Models
 
         public int PageCount
         {
-            get { return (TotalItems/ItemsPerPage) + (TotalItems%ItemsPerPage > 0 ? 1 : 0); }
+            get { return (TotalItems / ItemsPerPage) + (TotalItems % ItemsPerPage > 0 ? 1 : 0); }
         }
     }
 
@@ -51,6 +53,10 @@ namespace CodingChallenge.UI.Models
             var page = request.Params.Get(GridOptions.PageKey);
             if (!string.IsNullOrEmpty(page))
                 options.Page = Convert.ToInt32(page);
+
+            var searchText = request.Params.Get(GridOptions.SearchTextValue);
+            if (!string.IsNullOrEmpty(searchText))
+                options.SearchText = searchText;
 
             return options;
         }

@@ -28,7 +28,7 @@ namespace CodingChallenge.UnitTests
         [Test]
         public void TestSearchMoviesOnlyReturnsResultsByTitleWhenTitleIsProvided()
         {
-            var movies = LibraryService.SearchMovies("Jaws");
+            var movies = LibraryService.SearchMovies("jaws",null,null, "Title", SortDirection.Ascending);
             Assert.AreEqual(3, movies.Count());
         }
 

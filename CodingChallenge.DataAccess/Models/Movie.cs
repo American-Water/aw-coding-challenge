@@ -13,5 +13,7 @@ namespace CodingChallenge.DataAccess.Models
         public int Year { get; set; }
         [DataMember(Name = "Rating", Order = 4)]
         public double Rating { get; set; }
+        [DataMember(Name = "Franchise", Order = 5)]
+        public string Franchise { get; set; }
     }
 }

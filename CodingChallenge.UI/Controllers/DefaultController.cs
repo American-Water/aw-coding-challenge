@@ -17,17 +17,37 @@ namespace CodingChallenge.UI.Controllers
             LibraryService = libraryService;
         }
 
-        public ActionResult Index([ModelBinder(typeof(GridBinder))]GridOptions options)
+        public ActionResult Index([ModelBinder(typeof(GridBinder))]GridOptions options, string searchText)
         {
-            options.TotalItems = LibraryService.SearchMoviesCount("");
+            if (searchText != null)
+            {
+                options.SearchText = searchText;
+                options.Page = 1;
+            }
+            else
+            {
+                options.SearchText = options.SearchText ?? "";
+            }
+
+            options.TotalItems = LibraryService.SearchMoviesCount(options.SearchText);
+
             if (options.SortColumn == null)
                 options.SortColumn = "ID";
+
+            var movies = LibraryService.SearchMovies(options.SearchText ?? "",
+                    (options.Page - 1) * options.ItemsPerPage,
+                    options.ItemsPerPage,
+                    options.SortColumn,
+                    options.SortDirection).ToList();
+
             var model = new MovieListViewModel
             {
                 GridOptions = options,
-                Movies = LibraryService.SearchMovies("", (options.Page - 1) * options.ItemsPerPage, options.ItemsPerPage).ToList()
+                Movies = movies
             };
             return View(model);
+            
         }
     }
 }
+

@@ -2,13 +2,24 @@
 @using SortDirection = CodingChallenge.DataAccess.SortDirection
 @model MovieListViewModel
 
+@* <input type="text" class="form-control" id="titleSearch" placeholder="Title Search" onkeydown="@SearchMovie()"> *@
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.TextBox("SearchText", "", new { placeholder = "Title Search...", id = "searchTextBox" })
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table table-striped grid-table">
     <thead>
         <tr>
-            <th><a href="@GetSortLink("ID")">ID</a></th>
-            <th><a href="@GetSortLink("Title")">Title</a></th>
-            <th><a href="@GetSortLink("Year")">Year</a></th>
-            <th><a href="@GetSortLink("Rating")">Rating</a></th>
+            <th><a href="@GetSortLink( "ID" )">ID</a></th>
+            <th><a href="@GetSortLink( "Title" )">Title</a></th>
+            <th><a href="@GetSortLink( "Year" )">Year</a></th>
+            <th><a href="@GetSortLink( "Rating" )">Rating</a></th>
+            <th><a href="@GetSortLink( "Franchise" )">Franchise</a></th>
         </tr>
     </thead>
     <tbody>
@@ -19,6 +30,7 @@
                 <td>@movie.Title</td>
                 <td>@movie.Year</td>
                 <td>@movie.Rating</td>
+                <td>@movie.Franchise</td>
             </tr>
         }
     </tbody>
@@ -33,7 +45,7 @@
             }
             else
             {
-                <li><a href="@GetPageLink(i)">@i</a></li>
+                <li><a href="@GetPageLink( i )">@i</a></li>
             }
         }
     </ul>
@@ -41,20 +53,37 @@
 
 @helper GetSortLink(string sortColumn)
 {
-    @Html.Raw(string.Format("/?{0}={1}&{2}={3}", 
-        GridOptions.SortColumnKey, 
-        sortColumn, 
+    /**/
+    @Html.Raw(string.Format("/?{0}={1}&{2}={3}",
+        GridOptions.SortColumnKey,
+        sortColumn,
         GridOptions.SortDirectionKey,
         Model.GridOptions.SortColumn == sortColumn && Model.GridOptions.SortDirection == SortDirection.Ascending ? GridOptions.SortDescendingValue : GridOptions.SortAscendingValue))
 }
-
 @helper GetPageLink(int page)
 {
-    @Html.Raw(string.Format("/?{0}={1}&{2}={3}&{4}={5}",
-        GridOptions.SortColumnKey, 
-        Model.GridOptions.SortColumn, 
+    /**/
+    @Html.Raw(string.Format("/?{0}={1}&{2}={3}&{4}={5}&{6}={7}",
+        GridOptions.SortColumnKey,
+        Model.GridOptions.SortColumn,
         GridOptions.SortDirectionKey,
         Model.GridOptions.SortDirection == SortDirection.Ascending ? GridOptions.SortAscendingValue : GridOptions.SortDescendingValue,
         GridOptions.PageKey,
-        page))
+        page,
+        GridOptions.SearchTextValue,
+        Model.GridOptions.SearchText))
+}
+@helper SearchMovie(string searchText)
+{
+    /**/
+
+    @Html.Raw(string.Format("/?{0}={1}&{2}={3}&{4}={5}&{6}={7}",
+        GridOptions.SortColumnKey,
+        Model.GridOptions.SortColumn,
+        GridOptions.SortDirectionKey,
+        Model.GridOptions.SortDirection == SortDirection.Ascending ? GridOptions.SortAscendingValue : GridOptions.SortDescendingValue,
+        GridOptions.PageKey,
+        Model.GridOptions.Page,
+        GridOptions.SearchTextValue,
+        searchText))
 }
