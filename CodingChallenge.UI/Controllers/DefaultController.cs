@@ -19,13 +19,14 @@ namespace CodingChallenge.UI.Controllers
 
         public ActionResult Index([ModelBinder(typeof(GridBinder))]GridOptions options)
         {
-            options.TotalItems = LibraryService.SearchMoviesCount("");
+            options.TotalItems = LibraryService.SearchMoviesCount(options.TitleSearch);
             if (options.SortColumn == null)
                 options.SortColumn = "ID";
             var model = new MovieListViewModel
             {
                 GridOptions = options,
-                Movies = LibraryService.SearchMovies("", (options.Page - 1) * options.ItemsPerPage, options.ItemsPerPage, options.SortColumn, options.SortDirection).ToList()
+                TitleSearch = options.TitleSearch,
+                Movies = LibraryService.SearchMovies(options.TitleSearch, (options.Page - 1) * options.ItemsPerPage, options.ItemsPerPage, options.SortColumn, options.SortDirection).ToList()
             };
             return View(model);
         }

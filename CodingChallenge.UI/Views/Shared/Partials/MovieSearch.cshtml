@@ -1,0 +1,12 @@
+﻿@using CodingChallenge.UI.Models
+@model MovieListViewModel
+
+@using (Html.BeginForm())
+{
+    <div class="col-md-8 pl-0 form-inline">
+        @Html.TextBoxFor(m => m.TitleSearch, new { @placeholder = "Search Title", @class = "form-control" })
+        <button type="submit" class="btn btn-primary mb-2">Search</button>
+        @Html.ValidationMessageFor(m => m.TitleSearch, null, new { @class = "text-danger"})
+    </div>
+}
+

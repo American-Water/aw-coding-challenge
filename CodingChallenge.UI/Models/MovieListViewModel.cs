@@ -7,5 +7,6 @@ namespace CodingChallenge.UI.Models
     {
         public List<Movie> Movies { get; set; }
         public GridOptions GridOptions { get; set; }
+        public string TitleSearch { get; set; }
     }
 }

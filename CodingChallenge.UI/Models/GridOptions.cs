@@ -23,6 +23,7 @@ namespace CodingChallenge.UI.Models
         public int Page { get; set; }
         public int ItemsPerPage { get; set; }
         public int TotalItems { get; set; }
+        public string TitleSearch { get; set; }
 
         public int PageCount
         {
@@ -39,7 +40,8 @@ namespace CodingChallenge.UI.Models
             var options = new GridOptions
             {
                 SortColumn = request.Params.Get(GridOptions.SortColumnKey),
-                Page = 1
+                Page = 1,
+                TitleSearch = string.IsNullOrWhiteSpace(request.Params.Get("TitleSearch")) ? "" : request.Params.Get("TitleSearch")
             };
 
             var sortDirection = request.Params.Get(GridOptions.SortDirectionKey);

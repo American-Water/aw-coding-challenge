@@ -25,7 +25,7 @@ namespace CodingChallenge.DataAccess
 
         public IEnumerable<Movie> SearchMovies(string title, int? skip = null, int? take = null, string sortColumn = "ID", SortDirection sortDirection = SortDirection.Ascending)
         {
-            var movies = GetMovies().Where(s => s.Title.Contains(title));
+            var movies = GetMovies().Where(s => s.Title.ToLower().Contains(title.ToLower()));
 
             var propertyInfo = typeof(Movie).GetProperty(sortColumn);
 

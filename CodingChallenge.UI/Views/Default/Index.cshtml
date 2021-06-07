@@ -17,6 +17,7 @@
     <body>
         <div>
             <h1>My Movie Library</h1>
+            @Html.Partial("/Views/Shared/Partials/MovieSearch.cshtml", Model)
             @Html.Partial("/Views/Shared/Partials/MoviesList.cshtml", Model)
         </div>
     </body>
