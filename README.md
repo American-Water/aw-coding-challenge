@@ -4,6 +4,13 @@ Thank you for taking the time to work on the American Water Coding Challenge. Th
 
 ## Instructions
 
+1. Clone this repository to your local
+1. Change the remote to a remote in your GitHub account
+1. Push to your GitHub account
+1. Create a branch named `coding-challenge-submission` and perform your work there
+1. Create a pull request from this branch to the main branch in your repository
+1. Share your public repository you'd like American Water to review
+
 At a minimum, please complete the following items:
 
 | Title              | Description                                                      |
