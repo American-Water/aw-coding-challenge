@@ -22,7 +22,7 @@ namespace CodingChallenge.UnitTests
         public void TestSearchMoviesCountReturnsExpectedCountWhenDuplicatesAreRemoved()
         {
             var count = LibraryService.SearchMoviesCount("");
-            Assert.AreEqual(28, count);
+            Assert.AreEqual(29, count);
         }
 
         [Test]
@@ -37,11 +37,11 @@ namespace CodingChallenge.UnitTests
         {
             var sorted = LibraryService.SearchMovies("", null, null, "Title", SortDirection.Ascending).ToArray();
           
-            var first = sorted[0];
+            var first = sorted[2];
             Assert.AreEqual(28, first.ID);
             Assert.AreEqual("An American Werewolf in London", first.Title);
          
-            var second = sorted[1];
+            var second = sorted[3];
             Assert.AreEqual(24, second.ID);
             Assert.AreEqual("Back to the Future", second.Title);
         }
