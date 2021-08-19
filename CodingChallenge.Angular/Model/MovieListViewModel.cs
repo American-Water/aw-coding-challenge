@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CodingChallenge.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace CodingChallenge.Angular.Model
 {

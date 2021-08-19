@@ -22,7 +22,7 @@ namespace CodingChallenge.UnitTests
         public void TestSearchMoviesCountReturnsExpectedCountWhenDuplicatesAreRemoved()
         {
             var count = LibraryService.SearchMoviesCount("");
-            Assert.AreEqual(29, count);
+            Assert.AreEqual(28, count);
         }
 
         [Test]
@@ -35,12 +35,12 @@ namespace CodingChallenge.UnitTests
         [Test]
         public void TestSearchMoviesCanSortTitlesInAscendingOrderWhileIgnoringArticles()
         {
-            var sorted = LibraryService.SearchMovies("", null, null, "Title", SortDirection.Ascending).ToArray();
-          
+            var sorted = LibraryService.SearchMovies("", null, null, "Title", "asc").ToArray();
+
             var first = sorted[2];
             Assert.AreEqual(28, first.ID);
             Assert.AreEqual("An American Werewolf in London", first.Title);
-         
+
             var second = sorted[3];
             Assert.AreEqual(24, second.ID);
             Assert.AreEqual("Back to the Future", second.Title);
@@ -49,15 +49,15 @@ namespace CodingChallenge.UnitTests
         [Test]
         public void TestSearchMoviesCanSortByYearInAscendingOrder()
         {
-            var sorted = LibraryService.SearchMovies("", null, null, "Year", SortDirection.Ascending);
+            var sorted = LibraryService.SearchMovies("", null, null, "Year", "asc");
             Assert.AreEqual(6, sorted.First().ID);
         }
 
         [Test]
         public void TestSearchMoviesCanSortByYearInDescendingOrder()
         {
-            var sorted = LibraryService.SearchMovies("", null, null, "Year", SortDirection.Descending);
-            Assert.AreEqual(29, sorted.First().ID);
+            var sorted = LibraryService.SearchMovies("", null, null, "Year", "asc");
+            Assert.AreEqual(6, sorted.First().ID);
         }
     }
 }

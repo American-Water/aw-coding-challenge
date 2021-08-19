@@ -24,6 +24,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Library.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Library.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CodingChallenge.DataAccess\CodingChallenge.DataAccess.csproj" />
   </ItemGroup>
 

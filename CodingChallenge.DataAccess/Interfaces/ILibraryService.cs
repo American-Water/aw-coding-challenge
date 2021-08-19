@@ -9,7 +9,7 @@ namespace CodingChallenge.DataAccess.Interfaces
 {
     public interface ILibraryService
     {
-        IEnumerable<Movie> SearchMovies(string title, int? skip = null, int? take = null, string sortColumn = null, SortDirection sortDirection = SortDirection.Ascending);
+        IEnumerable<Movie> SearchMovies(string title, int? skip = null, int? take = null, string sortColumn = null, string sortDirection = "asc");
         int SearchMoviesCount(string title);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
 using System.Linq;
 using CodingChallenge.DataAccess.Interfaces;
 using CodingChallenge.DataAccess.Models;
@@ -14,7 +14,7 @@ namespace CodingChallenge.DataAccess
 
         private IEnumerable<Movie> GetMovies()
         {
-            return _movies ?? (_movies = ConfigurationManager.AppSettings["LibraryPath"].FromFileInExecutingDirectory().DeserializeFromXml<Library>().Movies);
+            return _movies ?? (_movies = "Library.xml".FromFileInExecutingDirectory().DeserializeFromXml<Library>().Movies);
         }
         private IEnumerable<Movie> _movies { get; set; }
 
@@ -24,9 +24,11 @@ namespace CodingChallenge.DataAccess
         }
 
 
-        public IEnumerable<Movie> SearchMovies(string title, int? skip = null, int? take = null, string sortColumn = null, SortDirection sortDirection = SortDirection.Ascending)
+        public IEnumerable<Movie> SearchMovies(string title, int? skip = null, int? take = null, string sortColumn = null, string sortDirection = "asc")
         {
             var movies = GetMovies().Where(s => s.Title.Contains(title));
+
+            movies = movies.Distinct(new MoviesComparer()).ToList();
 
             if (!string.IsNullOrEmpty(sortColumn))
             {
@@ -42,26 +44,39 @@ namespace CodingChallenge.DataAccess
             return movies.ToList();
         }
 
-        private IEnumerable<Movie> Sort(IEnumerable<Movie> movies, string sortColumn, SortDirection sortDirection)
+        private IEnumerable<Movie> Sort(IEnumerable<Movie> movies, string sortColumn, string sortDirection)
         {
             if (movies == null && string.IsNullOrEmpty(sortColumn)) return movies;
 
             switch (sortColumn.ToLower())
             {
                 case "year":
-                    movies = SortDirection.Descending == sortDirection
+                    movies = sortDirection != "asc"
                         ? movies.OrderByDescending(o => o.Year)
                         : movies.OrderBy(o => o.Year);
                     break;
 
                 case "title":
-                    movies = SortDirection.Descending == sortDirection
+                    movies = sortDirection != "asc"
                         ? movies.OrderByDescending(o => o.Title)
                         : movies.OrderBy(o => o.Title);
                     break;
             }
 
             return movies;
+        }
+    }
+
+    class MoviesComparer : IEqualityComparer<Movie>
+    {
+        public bool Equals(Movie x, Movie y)
+        {
+            return x.Title == y.Title;
+        }
+
+        public int GetHashCode(Movie obj)
+        {
+            return (obj.Title).GetHashCode();
         }
     }
 }
